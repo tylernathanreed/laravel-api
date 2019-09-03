@@ -1,0 +1,38 @@
+{
+    "name": "reedware/laravel-api",
+    "description": "Adds configurable web api connections to your Laravel application.",
+    "keywords": [
+        "laravel", "api", "connection"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tyler Reed",
+            "email": "tylernathanreed@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/contracts": "5.1 - 5.8",
+        "illuminate/support": "5.1 - 5.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Reedware\\LaravelApi\\": "src/"
+        }
+    },
+    "autoload-dev": {},
+    "suggest": {},
+    "conflict": {},
+    "config": {},
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Reedware\\LaravelApi\\ApiServiceProvider"
+            ]
+        }
+    }
+}
