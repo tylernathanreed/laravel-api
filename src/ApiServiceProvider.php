@@ -2,8 +2,8 @@
 
 namespace Reedware\LaravelApi;
 
-use Reedware\LarvelApi\ApiManager;
-use Reedware\LarvelApi\Support\DeferredServiceProvider;
+use Reedware\LaravelApi\ApiManager;
+use Reedware\LaravelApi\Support\DeferredServiceProvider;
 
 class ApiServiceProvider extends DeferredServiceProvider
 {
