@@ -3,6 +3,7 @@
 namespace Reedware\LaravelApi;
 
 use Reedware\LaravelApi\ApiManager;
+use Reedware\LaravelApi\Connectors\ConnectionFactory;
 use Reedware\LaravelApi\Support\DeferredServiceProvider;
 
 class ApiServiceProvider extends DeferredServiceProvider
@@ -14,17 +15,72 @@ class ApiServiceProvider extends DeferredServiceProvider
      */
     public function register()
     {
-        $this->registerJiraApiManager();
+        $this->registerConnectionServices();
     }
 
     /**
-     * Registers the Jira service.
+     * Registers the primary api connection bindings.
      *
      * @return void
      */
-    protected function registerJiraApiManager()
+    protected function registerConnectionServices()
     {
-        $this->app->singleton(ApiManager::class);
+        $this->registerApiConnectionFactory();
+        $this->registerApiManager();
+        $this->registerApiDefaultConnection();
+    }
+
+    /**
+     * Registers the api connection factory.
+     *
+     * @return void
+     */
+    protected function registerApiConnectionFactory()
+    {
+        // The connection factory is used to create the actual connection instances on
+        // to the web api. We will inject the factory into the manager so that it may
+        // make the connections while they are actually needed and not of before.
+
+        // Register the service
+        $this->app->singleton(ConnectionFactory::class, function($app) {
+            return new ConnectionFactory($app);
+        });
+
+        // Alias the binding
+        $this->app->alias(ConnectionFactory::class, 'api.factory');
+    }
+
+    /**
+     * Registers the api manager.
+     *
+     * @return void
+     */
+    protected function registerApiManager()
+    {
+        // The web api manager is used to resolve various connections, since multiple
+        // connections might be managed. It also implements the connection resolver
+        // interface which may be used by other components requiring connections.
+
+        // Register the service
+        $this->app->singleton(ApiManager::class, function($app) {
+            return new ApiManager($app, $app['api.factory']);
+        });
+
+        // Alias the binding
+        $this->app->alias(ApiManager::class, 'api');
+    }
+
+    /**
+     * Registers the default api connection.
+     *
+     * @return void
+     */
+    protected function registerApiDefaultConnection()
+    {
+        // Register the service
+        $this->app->bind('api.connection', function($app) {
+            return $app['api']->connection();
+        });
     }
 
     /**
@@ -73,5 +129,20 @@ class ApiServiceProvider extends DeferredServiceProvider
     protected function getApplicationConfigPath()
     {
         return config_path('api.php');
+    }
+
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            ConnectionFactory::class, 'api.factory',
+            ApiManager::class, 'api',
+            'api.connection'
+        ];
     }
 }

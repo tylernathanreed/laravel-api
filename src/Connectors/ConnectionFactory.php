@@ -56,7 +56,7 @@ class ConnectionFactory
      */
     protected function createClientResolver(array $config)
     {
-        return function () use ($config) {
+        return function() use ($config) {
 
             // Randomly try each host
             foreach(Arr::shuffle($hosts = $this->parseHosts($config)) as $key => $host) {

@@ -31,7 +31,14 @@ class Builder
      *
      * @var string
      */
-    public $url = '/';
+    public $endpoint = '/';
+
+    /**
+     * The path appended to the url endpoint.
+     *
+     * @var string
+     */
+    public $path;
 
     /**
      * The current options.
@@ -101,13 +108,13 @@ class Builder
     /**
      * Sets the url endpoint of this request.
      *
-     * @param  string  $url
+     * @param  string  $endpoint
      *
      * @return $this
      */
-    public function url($url)
+    public function endpoint($endpoint)
     {
-        $this->url = $url;
+        $this->endpoint = $endpoint;
 
         return $this;
     }
@@ -117,9 +124,55 @@ class Builder
      *
      * @return string
      */
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    /**
+     * Sets the path appended to the url for this request.
+     *
+     * @param  string  $path
+     *
+     * @return $this
+     */
+    public function path($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Returns the path appended to the url for this request.
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Sets the url endpoint of this request and clears the path.
+     *
+     * @param  string  $url
+     *
+     * @return $this
+     */
+    public function url($url)
+    {
+        return $this->endpoint($url)->path(null);
+    }
+
+    /**
+     * Returns the base url endpoint with the appended path for this request.
+     *
+     * @return string
+     */
     public function getUrl()
     {
-        return $this->url;
+        return rtrim($this->endpoint, '/') . '/' . ltrim($this->path, '/');
     }
 
     /**
