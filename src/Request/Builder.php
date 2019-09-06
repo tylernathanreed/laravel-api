@@ -274,7 +274,7 @@ class Builder
 
         // Set the form parameters
         if(!is_null($data)) {
-            $this->setOption(RequestOptions::FORM_PARAMS, $data);
+            $this->setOption($method == 'GET' ? RequestOptions::QUERY : RequestOptions::FORM_PARAMS, $data);
         }
 
         // Return the response
