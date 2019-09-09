@@ -128,7 +128,7 @@ class ApiServiceProvider extends DeferredServiceProvider
      */
     protected function getApplicationConfigPath()
     {
-        return config_path('api.php');
+        return $this->app->basePath('config/api.php');
     }
 
 
