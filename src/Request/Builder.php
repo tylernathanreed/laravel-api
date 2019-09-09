@@ -830,7 +830,7 @@ class Builder
      */
     public function expectsJson($value = true)
     {
-        $this->setOption('expects_json', $value)->acceptsJson();
+        return $this->setOption('expects_json', $value)->acceptsJson();
     }
 
     /**
