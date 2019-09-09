@@ -840,7 +840,7 @@ class Builder
      */
     public function acceptsJson()
     {
-        return $this->header('Accept', 'application/json');
+        return $this->addHeader('Accept', 'application/json');
     }
 
     /**
