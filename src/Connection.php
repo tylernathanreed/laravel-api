@@ -523,6 +523,44 @@ class Connection implements ConnectionInterface
     }
 
     /**
+     * Sets the specified option in the configuration options.
+     * 
+     * @param  string|array  $key
+     * @param  string|null   $value
+     * 
+     * @return $this
+     */
+    public function setConfig($key, $value = null)
+    {
+        Arr::set($this->config, $key, $value);
+
+        return $this;
+    }
+
+    /**
+     * Adds the specified option in the configuration options.
+     * 
+     * @param  string  $key
+     * @param  mixed   $value
+     * 
+     * @return $this
+     */
+    public function addDefaultOption($key, $value)
+    {
+        // Determine the current options
+        $options = $this->getConfig('options');
+
+        // Add the specified option
+        $options[$key] = $value;
+
+        // Set the options back
+        $this->setConfig('options', $options);
+
+        // Allow chaining
+        return $this;
+    }
+
+    /**
      * Returns the api driver name.
      *
      * @return string
