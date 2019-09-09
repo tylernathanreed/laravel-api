@@ -172,7 +172,7 @@ class Builder
      */
     public function getUrl()
     {
-        return rtrim($this->endpoint, '/') . '/' . ltrim($this->path, '/');
+        return ltrim(rtrim($this->endpoint, '/') . '/' . ltrim($this->path, '/'), '/');
     }
 
     /**
