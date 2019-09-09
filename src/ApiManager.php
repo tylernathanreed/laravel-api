@@ -4,7 +4,7 @@ namespace Reedware\LaravelApi;
 
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Container\Container;
 use Reedware\LaravelApi\Connectors\ConnectionFactory;
 
 class ApiManager
@@ -12,7 +12,7 @@ class ApiManager
     /**
      * The application instance.
      *
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var \Illuminate\Container\Container
      */
     protected $app;
 
@@ -40,12 +40,12 @@ class ApiManager
     /**
      * Create a new api manager instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application       $app
+     * @param  \Illuminate\Container\Container                    $app
      * @param  \Reedware\LaravelApi\Connectors\ConnectionFactory  $factory
      *
      * @return $this
      */
-    public function __construct(Application $app, ConnectionFactory $factory)
+    public function __construct(Container $app, ConnectionFactory $factory)
     {
         $this->app = $app;
         $this->factory = $factory;
