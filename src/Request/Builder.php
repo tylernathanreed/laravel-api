@@ -274,7 +274,7 @@ class Builder
 
         // Set the form parameters
         if(!is_null($data)) {
-            $this->setOption($method == 'GET' ? RequestOptions::QUERY : RequestOptions::FORM_PARAMS, $data);
+            $this->addOption($method == 'GET' ? RequestOptions::QUERY : RequestOptions::FORM_PARAMS, $data);
         }
 
         // Return the response
@@ -960,6 +960,18 @@ class Builder
     public function query($value)
     {
         return $this->setOption(RequestOptions::QUERY, $value);
+    }
+
+    /**
+     * Adds the specified query parameters to the request.
+     * 
+     * @param  array  $value
+     * 
+     * @return $this
+     */
+    public function addQuery($value)
+    {
+        return $this->addOption(RequestOptions::QUERY, $value);
     }
 
     /**
