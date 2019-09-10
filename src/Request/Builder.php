@@ -172,7 +172,7 @@ class Builder
      */
     public function getUrl()
     {
-        return rtrim($this->endpoint, '/') . '/' . ltrim($this->path, '/');
+        return ltrim(rtrim($this->endpoint, '/') . '/' . ltrim($this->path, '/'), '/');
     }
 
     /**
@@ -274,7 +274,7 @@ class Builder
 
         // Set the form parameters
         if(!is_null($data)) {
-            $this->setOption($method == 'GET' ? RequestOptions::QUERY : RequestOptions::FORM_PARAMS, $data);
+            $this->addOption($method == 'GET' ? RequestOptions::QUERY : RequestOptions::FORM_PARAMS, $data);
         }
 
         // Return the response
@@ -830,7 +830,7 @@ class Builder
      */
     public function expectsJson($value = true)
     {
-        $this->setOption('expects_json', $value)->acceptsJson();
+        return $this->setOption('expects_json', $value)->acceptsJson();
     }
 
     /**
@@ -840,7 +840,7 @@ class Builder
      */
     public function acceptsJson()
     {
-        return $this->header('Accept', 'application/json');
+        return $this->addHeader('Accept', 'application/json');
     }
 
     /**
@@ -960,6 +960,18 @@ class Builder
     public function query($value)
     {
         return $this->setOption(RequestOptions::QUERY, $value);
+    }
+
+    /**
+     * Adds the specified query parameters to the request.
+     * 
+     * @param  array  $value
+     * 
+     * @return $this
+     */
+    public function addQuery($value)
+    {
+        return $this->addOption(RequestOptions::QUERY, $value);
     }
 
     /**
