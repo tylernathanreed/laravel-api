@@ -137,7 +137,7 @@ class ApiManager
 
         // If the connection isn't configured, throw an exception
         if(is_null($config = Arr::get($connections, $name))) {
-            throw new InvalidArgumentException("Jira API Connection [{$name}] not configured.");
+            throw new InvalidArgumentException("API Connection [{$name}] not configured.");
         }
 
         // Return the configuration
