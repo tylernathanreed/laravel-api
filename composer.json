@@ -32,7 +32,10 @@
         "laravel": {
             "providers": [
                 "Reedware\\LaravelApi\\ApiServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Api": "Reedware\\LaravelApi\\Facade"
+            }
         }
     }
 }
